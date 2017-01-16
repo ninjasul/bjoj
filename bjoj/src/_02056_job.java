@@ -114,7 +114,7 @@ public class _02056_job {
 		int answer = 0;
 		for( int i = 1; i <= jobCnt; ++i )
 		{
-			answer = Math.max(answer,  totalJobTime[i]);
+			answer = Math.max(answer, totalJobTime[i]);
 		}
 		
 		System.out.println(answer);
