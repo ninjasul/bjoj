@@ -5,6 +5,7 @@ import java.util.Queue;
 import java.util.Scanner;
 
 public class _01766_workbook {
+	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int numOfProblem = sc.nextInt();
