@@ -41,7 +41,7 @@ public class _02056_job {
 		Scanner sc = new Scanner(System.in);
 		int jobCnt = sc.nextInt();
 		//sc.nextLine();
-		
+
 		// 간선 리스트 초기화
 		List<Integer> [] edgeList = (List<Integer>[]) new List[jobCnt+1];
 		

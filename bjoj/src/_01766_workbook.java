@@ -39,7 +39,7 @@ public class _01766_workbook {
 			if( indegreeCnt[i] == 0 )
 				orderQueue.add(i);
 		}
-		
+
 		// Queue 가 빌 때까지 진행
 		while( orderQueue.peek() != null )
 		{
