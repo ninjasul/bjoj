@@ -102,18 +102,17 @@ public class _01922_NetworkConnectionWithPrim {
 		visited[1] = true;
 		
 		// 정점 1부터 시작하는 간선리스트를 비용 오름 차순으로 minHeap에 삽입 
-		for( Edge curEdge : edgeList[1] )
-		{
-			edgeMinHeap.add(curEdge);
-		}
-
+		edgeMinHeap.addAll(edgeList[1]);
+				
 		// 결과 값인 총 비용 선언
 		int costSum = 0;
 
-		for( int i = 0; i < nodeCnt; ++i )
+		// 정점 1을 제외한 정점의 개수만큼 루프를 실행
+		for( int i = 1; i <= nodeCnt-1; ++i )
 		{		
 			Edge curEdge = new Edge();
 			
+			// 최소 비용 간선을 얻는다
 			while ( edgeMinHeap.peek() != null )
 			{
 				curEdge = edgeMinHeap.remove();
@@ -122,13 +121,12 @@ public class _01922_NetworkConnectionWithPrim {
 					break;
 			}
 
+			// 간선의 끝점을 방문처리 하고 비용을 합산
 			visited[curEdge.to] = true;
 			costSum += curEdge.cost;
 			
-			for( Edge nextEdge : edgeList[curEdge.to] )
-			{
-				edgeMinHeap.add(nextEdge);
-			}
+			// 끝점에서 시작하는 간선리스트를 minHeap에 삽입
+			edgeMinHeap.addAll(edgeList[curEdge.to]);
 		}		
 
 		System.out.println(costSum);
