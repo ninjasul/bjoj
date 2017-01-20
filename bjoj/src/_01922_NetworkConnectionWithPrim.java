@@ -45,6 +45,7 @@ a컴퓨터와 b컴퓨터를 연결하는데 비용이 c만큼 든다는 것을 �
 
 import java.util.*;
 
+
 class Edge {
 	public int from;
 	public int to;
@@ -61,16 +62,23 @@ class Edge {
 	}
 }
 
-public class _01922_NetworkConnection_Prim {
+public class _01922_NetworkConnectionWithPrim {
 	
 	public static void main(String[] args) {
 
 		Scanner sc = new Scanner(System.in);
 		int nodeCnt = sc.nextInt();
 		int edgeCnt = sc.nextInt();
-
-		List<Edge> [] edgeList = (List<Edge>[]) new List[nodeCnt+1];
 		
+		
+		// 간선 리스트 선언
+		List<Edge> [] edgeList = (List<Edge>[]) new List[nodeCnt+1];
+		for( int i = 1; i <= nodeCnt; ++i )
+		{
+			edgeList[i] = new ArrayList<Edge>();
+		}
+		
+		// 양방향 그래프로 간선리스트 초기화
 		for (int i = 0; i < edgeCnt; ++i) {
 			int from = sc.nextInt();
 			int to = sc.nextInt();
@@ -79,34 +87,42 @@ public class _01922_NetworkConnection_Prim {
 			edgeList[from].add(new Edge(from, to, cost));
 			edgeList[to].add(new Edge(to, from, cost));
 		}
-						
+
+		// 비용 오름차순으로 정렬된 간선의 minHeap을 선언, 비용 오름차순 구현을 위해 compare() 메소드 구현
 		Queue<Edge> edgeMinHeap = new PriorityQueue<Edge>(edgeCnt, new Comparator<Edge>() {
 			public int compare(Edge source, Edge target) {
 				return Integer.compare(source.cost, target.cost);
 			}
 		});
-		boolean[] visited = new boolean[nodeCnt+1];		
+		
+		// 정점 별 방문 여부 배열 선언 
+		boolean[] visited = new boolean[nodeCnt+1];
+		
+		// 정점 1 부터 시작
 		visited[1] = true;
 		
+		// 정점 1부터 시작하는 간선리스트를 비용 오름 차순으로 minHeap에 삽입 
 		for( Edge curEdge : edgeList[1] )
 		{
 			edgeMinHeap.add(curEdge);
 		}
 
+		// 결과 값인 총 비용 선언
 		int costSum = 0;
-		for( int i = 1; i <= nodeCnt-1; ++i )
-		{
+
+		for( int i = 0; i < nodeCnt; ++i )
+		{		
 			Edge curEdge = new Edge();
 			
-			while( edgeMinHeap.peek() != null )
+			while ( edgeMinHeap.peek() != null )
 			{
 				curEdge = edgeMinHeap.remove();
 				
 				if( visited[curEdge.to] == false )
 					break;
 			}
-						
-			visited[curEdge.to] = true;			
+
+			visited[curEdge.to] = true;
 			costSum += curEdge.cost;
 			
 			for( Edge nextEdge : edgeList[curEdge.to] )
