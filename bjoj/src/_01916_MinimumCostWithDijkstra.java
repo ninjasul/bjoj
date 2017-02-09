@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 /*
 최소비용 구하기
 
@@ -51,10 +49,10 @@ public class _01916_MinimumCostWithDijkstra {
 		}
 	}
 	
-	static boolean [] isVisited;
-	static int [] costs;
-	static List<Edge> [] edgeLists;
-	static final int INFINITE_COST = Integer.MAX_VALUE;
+	static boolean [] visited;			// 각 정점의 방문여부 배열
+	static int [] costs;				// 시작점으로부터 각 정점까지의 방문비용
+	static List<Edge> [] edgeLists;		// 간선리스트
+	static final int INFINITE_COST = Integer.MAX_VALUE-1;	// 비용 초기값
 	
 	static public void main(String [] args) {
 		
@@ -62,49 +60,66 @@ public class _01916_MinimumCostWithDijkstra {
 		int vertexCnt = sc.nextInt();
 		int edgeCnt = sc.nextInt();
 		
-		isVisited = new boolean [vertexCnt+1];
+		// 정점의 개수만큼 방문여부 배열, 방문비용, 간선리스트 선언
+		visited = new boolean [vertexCnt+1];
 		costs = new int [vertexCnt+1];
-		edgeLists = (ArrayList<Edge> []) new ArrayList [vertexCnt+1]; 
+		edgeLists = (List<Edge> []) new List [vertexCnt+1]; 
 		
+		// 초기화
 		for( int i = 1; i <= vertexCnt; ++i ) {
-			isVisited[i] = false;
+			visited[i] = false;
 			costs[i] = INFINITE_COST;
 			edgeLists[i] = new ArrayList<Edge>();
 		}
 		
+		// 간선 초기화
 		for( int i = 0; i < edgeCnt; ++i ) {
 			int from = sc.nextInt();
 			int to = sc.nextInt();
 			int cost = sc.nextInt();
 			
 			edgeLists[from].add(new Edge(to, cost));
-			edgeLists[to].add(new Edge(from, cost));
+			//edgeLists[to].add(new Edge(from, cost));
 		}
 		
+		// 시작점과 끝점을 입력 
 		int startVertex = sc.nextInt();
 		int endVertex = sc.nextInt();
 				
-		Queue<Integer> nextVertexes = new LinkedList<Integer>();
-		nextVertexes.add(startVertex);
 		costs[startVertex] = 0;
+		int minVertex = 0;
 		
-		while( !nextVertexes.isEmpty() ) {
-			int from = nextVertexes.remove();
+		do {				
+			minVertex = -1;
+			int minCost = Integer.MAX_VALUE;			
 			
-			isVisited[from] = true;
-			
-			for( Edge curEdge : edgeLists[from] ) {
-				int to = curEdge.to;
-				int cost = curEdge.cost;
-				
-				if( !isVisited[to] )
-					nextVertexes.add(to);
-				
-				if( costs[from] != INFINITE_COST && costs[to] > costs[from] + cost ) {
-					costs[to] = costs[from] + cost;
+			// 방문하지 않은 정점 중 최소비용 정점을 찾아냄.   
+			for( int j = 1; j <= vertexCnt; ++j ) {
+				if( !visited[j] && minCost > costs[j] ) {
+					minCost = costs[j];
+					minVertex = j;
 				}
-			}			
-		}
+			}
+		
+			// 미방문 정점이 존재하는 경우
+			if( minVertex != -1 ) {
+								
+				// 해당 정점을 방문처리
+				visited[minVertex] = true;
+				
+				// 해당 정점으로 부터 연결된 모든 간선에 대해
+				for( Edge curEdge : edgeLists[minVertex] ) {
+					int to = curEdge.to;
+					int cost = curEdge.cost;
+					
+					// 비용 배열을 업데이트
+					if( costs[minVertex] != INFINITE_COST && costs[to] > costs[minVertex] + cost ) {
+						costs[to] = costs[minVertex] + cost;
+					}
+				}
+			}
+			
+		} while( minVertex != -1 ); // 미방문 정점이 존재하는 동안 루프 수행
 		
 		System.out.println(( costs[endVertex] == INFINITE_COST ) ? -1 : costs[endVertex] );
 	}
