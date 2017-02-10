@@ -137,7 +137,7 @@ public class _11779_MinimunCostWithDijkstra2 {
 			nextVertex = fromVertexes[nextVertex];
 			routeStack.add(nextVertex);
 		}
-		
+
 		System.out.println(costs[endVertex]);	// 시작 정점부터 끝 정점까지의 비용 출력 
 		System.out.println(routeStack.size());	// 방문 경로 사이즈 출력
 		while( !routeStack.isEmpty() ) {		 
