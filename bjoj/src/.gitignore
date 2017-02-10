@@ -13,7 +13,9 @@ tmp/
 .settings/
 .loadpath
 .recommenders
-.class
+*.class
+*.classpath
+*.prefs
 
 # Eclipse Core
 .project
