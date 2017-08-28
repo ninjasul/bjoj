@@ -46,16 +46,16 @@ a컴퓨터와 b컴퓨터를 연결하는데 비용이 c만큼 든다는 것을 �
 import java.util.*;
 
 
-class Edge {
+class _Edge {
 	public int from;
 	public int to;
 	public int cost;
 	
-	public Edge() {
+	public _Edge() {
 		this(0, 0, 0);
 	}
 	
-	public Edge(int from, int to, int cost) {
+	public _Edge(int from, int to, int cost) {
 		this.from = from;
 		this.to = to;
 		this.cost = cost;
@@ -72,10 +72,10 @@ public class _01922_NetworkConnectionWithPrim {
 		
 		
 		// 간선 리스트 선언
-		List<Edge> [] edgeList = (List<Edge>[]) new List[nodeCnt+1];
+		List<_Edge> [] edgeList = (List<_Edge>[]) new List[nodeCnt+1];
 		for( int i = 1; i <= nodeCnt; ++i )
 		{
-			edgeList[i] = new ArrayList<Edge>();
+			edgeList[i] = new ArrayList<_Edge>();
 		}
 		
 		// 양방향 그래프로 간선리스트 초기화
@@ -84,13 +84,13 @@ public class _01922_NetworkConnectionWithPrim {
 			int to = sc.nextInt();
 			int cost = sc.nextInt();
 
-			edgeList[from].add(new Edge(from, to, cost));
-			edgeList[to].add(new Edge(to, from, cost));
+			edgeList[from].add(new _Edge(from, to, cost));
+			edgeList[to].add(new _Edge(to, from, cost));
 		}
 
 		// 비용 오름차순으로 정렬된 간선의 minHeap을 선언, 비용 오름차순 구현을 위해 compare() 메소드 구현
-		Queue<Edge> edgeMinHeap = new PriorityQueue<Edge>(edgeCnt, new Comparator<Edge>() {
-			public int compare(Edge source, Edge target) {
+		Queue<_Edge> edgeMinHeap = new PriorityQueue<_Edge>(edgeCnt, new Comparator<_Edge>() {
+			public int compare(_Edge source, _Edge target) {
 				return Integer.compare(source.cost, target.cost);
 			}
 		});
@@ -110,7 +110,7 @@ public class _01922_NetworkConnectionWithPrim {
 		// 정점 1을 제외한 정점의 개수만큼 루프를 실행
 		for( int i = 1; i <= nodeCnt-1; ++i )
 		{		
-			Edge curEdge = new Edge();
+			_Edge curEdge = new _Edge();
 			
 			// 최소 비용 간선을 얻는다
 			while ( edgeMinHeap.peek() != null )
