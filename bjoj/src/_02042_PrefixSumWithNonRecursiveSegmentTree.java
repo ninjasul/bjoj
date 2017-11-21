@@ -40,7 +40,7 @@ a가 1인 경우 b번째 수를 c로 바꾸고 a가 2인 경우에는 b번째 �
 import java.math.BigInteger;
 import java.util.Scanner;
 
-public class _02042_SegmentTreeNonRecursiveSum {
+public class _02042_PrefixSumWithNonRecursiveSegmentTree {
 		
 	static int leafNodeIndex = 1;  
 	static BigInteger [] tree;

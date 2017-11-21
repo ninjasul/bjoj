@@ -38,7 +38,7 @@ a가 1인 경우 b번째 수를 c로 바꾸고 a가 2인 경우에는 b번째 �
 17
 12
 */
-public class _02042_SegmentTreeRecursiveSum {
+public class _02042_PrefixSumWithRecursiveSegmentTree {
 
 	static int [] array;
 	static int [] tree;
